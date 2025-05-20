@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:include="commom::title('首页')"></head>
+    <style>
+        .top-panel {
+            border: 1px solid #eceff9;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #ffffff, #f8f9fc);
+        }
+        
+        .top-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .top-panel > .layui-card-body{
+            height: 70px;
+        }
+        
+        .top-panel-number{
+            line-height: 70px;
+            font-size: 32px;
+            border-right: 1px solid #eceff9;
+            font-weight: bold;
+            color: #1E9FFF;
+        }
+        
+        .top-panel-tips{
+            line-height: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .stat-card-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1E9FFF;
+        }
+        
+        .stat-card-icon {
+            font-size: 36px;
+            color: #1E9FFF;
+            opacity: 0.5;
+        }
+        
+        .chart-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .layui-timeline-item:before {
+            background-color: #1E9FFF;
+        }
+    </style>
+</head>
+<body>
+<div class="layuimini-main">
+
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="layui-card top-panel">
+                <div class="layui-card-header" style="font-size: 18px; padding: 10px; color: #333;">系统当前时间</div>
+                <div class="layui-card-body">
+                    <div class="layui-row">
+                        <div class="top-panel-number" id="datetime">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据概览卡片 -->
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+            <div class="stat-card">
+                <div class="layui-row">
+                    <div class="layui-col-xs8">
+                        <div class="stat-card-title">入住老人</div>
+                        <div class="stat-card-value">87</div>
+                    </div>
+                    <div class="layui-col-xs4 layui-text-right">
+                        <i class="fa fa-users stat-card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+            <div class="stat-card">
+                <div class="layui-row">
+                    <div class="layui-col-xs8">
+                        <div class="stat-card-title">护工数量</div>
+                        <div class="stat-card-value">24</div>
+                    </div>
+                    <div class="layui-col-xs4 layui-text-right">
+                        <i class="fa fa-user-md stat-card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+            <div class="stat-card">
+                <div class="layui-row">
+                    <div class="layui-col-xs8">
+                        <div class="stat-card-title">本月外出</div>
+                        <div class="stat-card-value">156</div>
+                    </div>
+                    <div class="layui-col-xs4 layui-text-right">
+                        <i class="fa fa-walking stat-card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+            <div class="stat-card">
+                <div class="layui-row">
+                    <div class="layui-col-xs8">
+                        <div class="stat-card-title">本月访客</div>
+                        <div class="stat-card-value">78</div>
+                    </div>
+                    <div class="layui-col-xs4 layui-text-right">
+                        <i class="fa fa-address-book stat-card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图表区域 -->
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md8">
+            <div class="chart-container">
+                <div id="echarts-records" style="min-height:400px;"></div>
+            </div>
+        </div>
+
+        <div class="layui-col-xs12 layui-col-md4">
+            <div class="chart-container">
+                <div id="echarts-pies" style="min-height:400px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 新增图表区域 -->
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md6">
+            <div class="chart-container">
+                <div id="echarts-age" style="min-height:300px;"></div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-md6">
+            <div class="chart-container">
+                <div id="echarts-health" style="min-height:300px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 最近活动 -->
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="chart-container">
+                <div class="stat-card-title">最近活动</div>
+                <ul class="layui-timeline">
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">今天</h3>
+                            <p>老人集体活动：广场舞练习 <span class="layui-badge layui-bg-green">进行中</span></p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">昨天</h3>
+                            <p>健康检查：春季体检 <span class="layui-badge layui-bg-blue">已完成</span></p>
+                        </div>
+                    </li>
+                    <li class="layui-timeline-item">
+                        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                        <div class="layui-timeline-content layui-text">
+                            <h3 class="layui-timeline-title">前天</h3>
+                            <p>文艺活动：合唱团练习 <span class="layui-badge layui-bg-blue">已完成</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script th:src="@{/static/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
+<script th:src="@{/static/js/lay-config.js(v=1.0.4)}" charset="utf-8"></script>
+<script>
+    //可以用于实时显示当前时间，并且每秒钟更新一次
+    setInterval("document.getElementById('datetime').innerHTML=new Date().toLocaleString();", 1000);
+    layui.use(['layer', 'echarts'], function () {
+        const $ = layui.jquery,
+            layer = layui.layer,
+            echarts = layui.echarts;
+
+        /**
+         * 报表功能
+         */
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+
+        var optionRecords = {
+            title: {
+                text: '养老院活动统计',
+                subtext: '每周活动参与情况',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow',
+                    label: {
+                        backgroundColor: '#1d8884'
+                    }
+                }
+            },
+            legend: {
+                top: 30,
+                data: ['文化活动', '体育活动', '娱乐活动', '医疗活动', '外出活动']
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {},
+                    dataZoom: {},
+                    restore: {}
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '参与人数'
+                }
+            ],
+            series: [
+                {
+                    name: '文化活动',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                        opacity: 0.8
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [20, 15, 10, 14, 25, 30, 21]
+                },
+                {
+                    name: '体育活动',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                        opacity: 0.8
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [15, 20, 25, 24, 19, 33, 31]
+                },
+                {
+                    name: '娱乐活动',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                        opacity: 0.8
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [25, 23, 20, 15, 19, 33, 41]
+                },
+                {
+                    name: '医疗活动',
+                    type: 'line',
+                    stack: '总量',
+                    areaStyle: {
+                        opacity: 0.8
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [30, 20, 25, 33, 39, 35, 25]
+                },
+                {
+                    name: '外出活动',
+                    type: 'line',
+                    stack: '总量',
+                    label: {
+                        show: true,
+                        position: 'top'
+                    },
+                    areaStyle: {
+                        opacity: 0.8
+                    },
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [35, 45, 47, 44, 45, 50, 52]
+                }
+            ]
+        };
+        echartsRecords.setOption(optionRecords);
+
+
+        /**
+         * 饼图
+         */
+        var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
+        var optionPies = {
+            title: {
+                text: '老人年龄分布',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                top: 30,
+                orient: 'horizontal',
+                left: 'center',
+                data: ['60-70岁', '71-80岁', '81-90岁', '91-100岁', '100岁以上']
+            },
+            series: [
+                {
+                    name: '年龄分布',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 35, name: '60-70岁'},
+                        {value: 28, name: '71-80岁'},
+                        {value: 18, name: '81-90岁'},
+                        {value: 5, name: '91-100岁'},
+                        {value: 1, name: '100岁以上'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        echartsPies.setOption(optionPies);
+        
+        /**
+         * 年龄分布柱状图
+         */
+        var echartsAge = echarts.init(document.getElementById('echarts-age'), 'walden');
+        var optionAge = {
+            title: {
+                text: '男女比例分布',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            legend: {
+                top: 30,
+                data: ['男性', '女性']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                data: ['60-70岁', '71-80岁', '81-90岁', '91-100岁', '100岁以上']
+            },
+            yAxis: {
+                type: 'value',
+                name: '人数'
+            },
+            series: [
+                {
+                    name: '男性',
+                    type: 'bar',
+                    stack: '性别',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [15, 12, 8, 2, 0]
+                },
+                {
+                    name: '女性',
+                    type: 'bar',
+                    stack: '性别',
+                    emphasis: {
+                        focus: 'series'
+                    },
+                    data: [20, 16, 10, 3, 1]
+                }
+            ]
+        };
+        echartsAge.setOption(optionAge);
+        
+        /**
+         * 健康状况雷达图
+         */
+        var echartsHealth = echarts.init(document.getElementById('echarts-health'), 'walden');
+        var optionHealth = {
+            title: {
+                text: '健康状况评估',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item'
+            },
+            radar: {
+                indicator: [
+                    { name: '血压', max: 100 },
+                    { name: '血糖', max: 100 },
+                    { name: '心率', max: 100 },
+                    { name: '体重', max: 100 },
+                    { name: '睡眠', max: 100 },
+                    { name: '饮食', max: 100 }
+                ]
+            },
+            series: [{
+                name: '健康指标',
+                type: 'radar',
+                data: [
+                    {
+                        value: [85, 78, 82, 90, 75, 88],
+                        name: '平均水平',
+                        areaStyle: {
+                            color: 'rgba(30, 159, 255, 0.6)'
+                        }
+                    }
+                ]
+            }]
+        };
+        echartsHealth.setOption(optionHealth);
+
+        // echarts 窗口缩放自适应
+        window.onresize = function () {
+            echartsRecords.resize();
+            echartsPies.resize();
+            echartsAge.resize();
+            echartsHealth.resize();
+        }
+
+    });
+</script>
+</body>
+</html>
