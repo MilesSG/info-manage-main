@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>乐龄之家图标生成器</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .container {
+      background-color: #f5f5f5;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      color: #4285F4;
+      margin-bottom: 20px;
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    .icon-preview {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: #4285F4;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background-color: #3367d6;
+    }
+    .instructions {
+      background-color: #e8f4f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>乐龄之家图标生成器</h1>
+  
+  <div class="container">
+    <p>下面是一个简单的乐龄之家系统图标，您可以右键点击图标并选择"另存为"来下载它，然后替换项目中的favicon.ico文件。</p>
+    
+    <div class="icon-preview">
+      <img id="faviconPreview" width="64" height="64" alt="乐龄之家图标">
+    </div>
+    
+    <button onclick="downloadFavicon()">下载图标</button>
+    
+    <div class="instructions">
+      <h3>替换图标步骤：</h3>
+      <ol>
+        <li>点击上方的"下载图标"按钮</li>
+        <li>将下载的图标文件重命名为 favicon.ico</li>
+        <li>替换项目中的文件：src/main/resources/static/images/favicon.ico</li>
+        <li>重启应用程序查看效果</li>
+      </ol>
+    </div>
+  </div>
+  
+  <script>
+    // Base64编码的图标数据 - 一个简单的蓝色"乐"字图标
+    const iconData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAF8WlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDggNzkuMTY0MDM2LCAyMDE5LzA4LzEzLTAxOjA2OjU3ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1sbnM6cGhvdG9zaG9wPSJodHRwOi8vbnMuYWRvYmUuY29tL3Bob3Rvc2hvcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgMjEuMCAoV2luZG93cykiIHhtcDpDcmVhdGVEYXRlPSIyMDIwLTA1LTIwVDExOjUwOjM4KzA4OjAwIiB4bXA6TW9kaWZ5RGF0ZT0iMjAyMC0wNS0yMFQxMTo1MjozMSswODowMCIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMC0wNS0yMFQxMTo1MjozMSswODowMCIgZGM6Zm9ybWF0PSJpbWFnZS9wbmciIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpkOTFiMWI4ZC0wYTMxLTRlNGMtOTYzZi02YTk0ZWNlNzc0YmMiIHhtcE1NOkRvY3VtZW50SUQ9ImFkb2JlOmRvY2lkOnBob3Rvc2hvcDowZDE5MGUwMy0yNzgzLTM3NDMtOWE3Ni0zOTcyZGJjMmM2OTMiIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1ODk1ZWJhMC02N2ZjLTRlNDAtOTcxMi0wOTBlZGE5NGNkODQiPiA8eG1wTU06SGlzdG9yeT4gPHJkZjpTZXE+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJjcmVhdGVkIiBzdEV2dDppbnN0YW5jZUlEPSJ4bXAuaWlkOjU4OTVlYmEwLTY3ZmMtNGU0MC05NzEyLTA5MGVkYTk0Y2Q4NCIgc3RFdnQ6d2hlbj0iMjAyMC0wNS0yMFQxMTo1MDozOCswODowMCIgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWRvYmUgUGhvdG9zaG9wIDIxLjAgKFdpbmRvd3MpIi8+IDxyZGY6bGkgc3RFdnQ6YWN0aW9uPSJzYXZlZCIgc3RFdnQ6aW5zdGFuY2VJRD0ieG1wLmlpZDpkOTFiMWI4ZC0wYTMxLTRlNGMtOTYzZi02YTk0ZWNlNzc0YmMiIHN0RXZ0OndoZW49IjIwMjAtMDUtMjBUMTE6NTI6MzErMDg6MDAiIHN0RXZ0OnNvZnR3YXJlQWdlbnQ9IkFkb2JlIFBob3Rvc2hvcCAyMS4wIChXaW5kb3dzKSIgc3RFdnQ6Y2hhbmdlZD0iLyIvPiA8L3JkZjpTZXE+IDwveG1wTU06SGlzdG9yeT4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7OIzriAAAJHElEQVR4nO2be4xU1R3HP+fOzO7sY3Z3WXZxJVZeFhQQxiKiVBQ0arQIimlsNBGJJjUN2vaPmqYxbW1sE2NjmsaktU1KjLW0JsVUxQdIQIxKZFEqiDyWXdjHsrA7Ozs7r3vP6R93Zndmd2d32Vcw+k1O7tzHOb/z+53f+Z3fOTPCcRzelMzC6uvAQuA8oBSIAibwEjAJeA04CBwG+oDTQFo3xDO6IV40U/1RXCTvJgEKoCngvG6I1wZf0w1hAs8DK4C4bogOIA2kdENUHQ+ZZxbT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";
+    
+    // 在页面加载时设置图标预览
+    window.onload = function() {
+      document.getElementById('faviconPreview').src = iconData;
+    };
+    
+    // 下载图标的函数
+    function downloadFavicon() {
+      // 创建一个临时链接
+      const link = document.createElement('a');
+      link.href = iconData;
+      link.download = 'favicon.ico';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html> 

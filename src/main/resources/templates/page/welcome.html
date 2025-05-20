@@ -3,19 +3,29 @@
 <head>
     <head th:include="commom::title('首页')"></head>
     <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --accent-color: #2E7D32;
+            --light-color: #E8F5E9;
+            --dark-color: #1B5E20;
+            --text-color: #2E3D2E;
+            --card-shadow: 0 4px 15px rgba(76, 175, 80, 0.15);
+        }
+        
         .top-panel {
-            border: 1px solid #eceff9;
-            border-radius: 8px;
+            border: 1px solid #e0e8e0;
+            border-radius: 12px;
             text-align: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, #ffffff, #f8f9fc);
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #ffffff, var(--light-color));
         }
         
         .top-panel:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
         }
         
         .top-panel > .layui-card-body{
@@ -25,60 +35,106 @@
         .top-panel-number{
             line-height: 70px;
             font-size: 32px;
-            border-right: 1px solid #eceff9;
+            border-right: 1px solid #e0e8e0;
             font-weight: bold;
-            color: #1E9FFF;
+            color: var(--primary-color);
         }
         
         .top-panel-tips{
             line-height: 30px;
             font-size: 14px;
-            color: #666;
+            color: var(--text-color);
         }
         
         .stat-card {
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
+            border-top: 3px solid var(--primary-color);
         }
         
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
         }
         
         .stat-card-title {
             font-size: 16px;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #333;
+            color: var(--text-color);
         }
         
         .stat-card-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: #1E9FFF;
+            color: var(--primary-color);
         }
         
         .stat-card-icon {
-            font-size: 36px;
-            color: #1E9FFF;
-            opacity: 0.5;
+            font-size: 40px;
+            color: var(--primary-color);
+            opacity: 0.6;
         }
         
         .chart-container {
             background-color: #ffffff;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            margin-bottom: 15px;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 20px;
+            border-left: 3px solid var(--secondary-color);
         }
         
         .layui-timeline-item:before {
-            background-color: #1E9FFF;
+            background-color: var(--primary-color);
+        }
+        
+        .eco-progress {
+            height: 8px;
+            background-color: #e0e8e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .eco-progress-bar {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+            width: 0;
+            transition: width 1s ease;
+        }
+        
+        .eco-statistics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .eco-stat-item {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 12px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+        }
+        
+        .eco-stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .eco-stat-label {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -88,7 +144,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-xs12 layui-col-md12">
             <div class="layui-card top-panel">
-                <div class="layui-card-header" style="font-size: 18px; padding: 10px; color: #333;">系统当前时间</div>
+                <div class="layui-card-header" style="font-size: 18px; padding: 12px; color: var(--text-color); font-weight: bold;">乐享晚年·健康生活</div>
                 <div class="layui-card-body">
                     <div class="layui-row">
                         <div class="top-panel-number" id="datetime">
@@ -105,11 +161,11 @@
             <div class="stat-card">
                 <div class="layui-row">
                     <div class="layui-col-xs8">
-                        <div class="stat-card-title">入住老人</div>
+                        <div class="stat-card-title">入住长者</div>
                         <div class="stat-card-value">87</div>
                     </div>
                     <div class="layui-col-xs4 layui-text-right">
-                        <i class="fa fa-users stat-card-icon"></i>
+                        <i class="fa fa-heart stat-card-icon"></i>
                     </div>
                 </div>
             </div>
@@ -118,7 +174,7 @@
             <div class="stat-card">
                 <div class="layui-row">
                     <div class="layui-col-xs8">
-                        <div class="stat-card-title">护工数量</div>
+                        <div class="stat-card-title">护理人员</div>
                         <div class="stat-card-value">24</div>
                     </div>
                     <div class="layui-col-xs4 layui-text-right">
@@ -131,11 +187,11 @@
             <div class="stat-card">
                 <div class="layui-row">
                     <div class="layui-col-xs8">
-                        <div class="stat-card-title">本月外出</div>
+                        <div class="stat-card-title">社区活动</div>
                         <div class="stat-card-value">156</div>
                     </div>
                     <div class="layui-col-xs4 layui-text-right">
-                        <i class="fa fa-walking stat-card-icon"></i>
+                        <i class="fa fa-leaf stat-card-icon"></i>
                     </div>
                 </div>
             </div>
@@ -144,11 +200,71 @@
             <div class="stat-card">
                 <div class="layui-row">
                     <div class="layui-col-xs8">
-                        <div class="stat-card-title">本月访客</div>
+                        <div class="stat-card-title">关爱探访</div>
                         <div class="stat-card-value">78</div>
                     </div>
                     <div class="layui-col-xs4 layui-text-right">
-                        <i class="fa fa-address-book stat-card-icon"></i>
+                        <i class="fa fa-handshake-o stat-card-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增健康指数模块 -->
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-xs12 layui-col-md12">
+            <div class="chart-container">
+                <div class="stat-card-title">长者健康指数分析</div>
+                <div class="eco-statistics">
+                    <div class="eco-stat-item">
+                        <div class="eco-stat-value">92%</div>
+                        <div class="eco-stat-label">日常活动</div>
+                    </div>
+                    <div class="eco-stat-item">
+                        <div class="eco-stat-value">85%</div>
+                        <div class="eco-stat-label">健康饮食</div>
+                    </div>
+                    <div class="eco-stat-item">
+                        <div class="eco-stat-value">78%</div>
+                        <div class="eco-stat-label">睡眠质量</div>
+                    </div>
+                    <div class="eco-stat-item">
+                        <div class="eco-stat-value">88%</div>
+                        <div class="eco-stat-label">心理健康</div>
+                    </div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>日常活动指数</span>
+                        <span>92%</span>
+                    </div>
+                    <div class="eco-progress">
+                        <div class="eco-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-top: 10px;">
+                        <span>健康饮食指数</span>
+                        <span>85%</span>
+                    </div>
+                    <div class="eco-progress">
+                        <div class="eco-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-top: 10px;">
+                        <span>睡眠质量指数</span>
+                        <span>78%</span>
+                    </div>
+                    <div class="eco-progress">
+                        <div class="eco-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px; margin-top: 10px;">
+                        <span>心理健康指数</span>
+                        <span>88%</span>
+                    </div>
+                    <div class="eco-progress">
+                        <div class="eco-progress-bar" style="width: 0%;"></div>
                     </div>
                 </div>
             </div>
@@ -186,32 +302,40 @@
 
     <!-- 最近活动 -->
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-xs12 layui-col-md12">
+        <div class="layui-col-xs12 layui-col-md6">
             <div class="chart-container">
-                <div class="stat-card-title">最近活动</div>
+                <div class="stat-card-title">近期社区活动</div>
                 <ul class="layui-timeline">
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">今天</h3>
-                            <p>老人集体活动：广场舞练习 <span class="layui-badge layui-bg-green">进行中</span></p>
+                            <p>乐享晚年：太极养生课程 <span class="layui-badge layui-bg-green">进行中</span></p>
                         </div>
                     </li>
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">昨天</h3>
-                            <p>健康检查：春季体检 <span class="layui-badge layui-bg-blue">已完成</span></p>
+                            <p>健康讲堂：春季养生保健 <span class="layui-badge layui-bg-blue">已完成</span></p>
                         </div>
                     </li>
                     <li class="layui-timeline-item">
                         <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                         <div class="layui-timeline-content layui-text">
                             <h3 class="layui-timeline-title">前天</h3>
-                            <p>文艺活动：合唱团练习 <span class="layui-badge layui-bg-blue">已完成</span></p>
+                            <p>欢乐时光：经典歌曲赏析 <span class="layui-badge layui-bg-blue">已完成</span></p>
                         </div>
                     </li>
                 </ul>
+            </div>
+        </div>
+        
+        <!-- 长者满意度调查 -->
+        <div class="layui-col-xs12 layui-col-md6">
+            <div class="chart-container">
+                <div class="stat-card-title">长者满意度调查</div>
+                <div id="satisfaction-chart" style="height:350px; width:100%; min-height:300px;"></div>
             </div>
         </div>
     </div>
@@ -231,12 +355,12 @@
         /**
          * 报表功能
          */
-        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'infographic');
 
         var optionRecords = {
             title: {
-                text: '养老院活动统计',
-                subtext: '每周活动参与情况',
+                text: '乐龄之家活动参与度',
+                subtext: '每周活动参与统计',
                 left: 'center'
             },
             tooltip: {
@@ -244,13 +368,13 @@
                 axisPointer: {
                     type: 'shadow',
                     label: {
-                        backgroundColor: '#1d8884'
+                        backgroundColor: '#4CAF50'
                     }
                 }
             },
             legend: {
                 top: 30,
-                data: ['文化活动', '体育活动', '娱乐活动', '医疗活动', '外出活动']
+                data: ['文化课堂', '健康运动', '娱乐休闲', '康复护理', '社区互动']
             },
             toolbox: {
                 feature: {
@@ -280,7 +404,7 @@
             ],
             series: [
                 {
-                    name: '文化活动',
+                    name: '文化课堂',
                     type: 'line',
                     stack: '总量',
                     areaStyle: {
@@ -292,7 +416,7 @@
                     data: [20, 15, 10, 14, 25, 30, 21]
                 },
                 {
-                    name: '体育活动',
+                    name: '健康运动',
                     type: 'line',
                     stack: '总量',
                     areaStyle: {
@@ -304,7 +428,7 @@
                     data: [15, 20, 25, 24, 19, 33, 31]
                 },
                 {
-                    name: '娱乐活动',
+                    name: '娱乐休闲',
                     type: 'line',
                     stack: '总量',
                     areaStyle: {
@@ -316,7 +440,7 @@
                     data: [25, 23, 20, 15, 19, 33, 41]
                 },
                 {
-                    name: '医疗活动',
+                    name: '康复护理',
                     type: 'line',
                     stack: '总量',
                     areaStyle: {
@@ -328,7 +452,7 @@
                     data: [30, 20, 25, 33, 39, 35, 25]
                 },
                 {
-                    name: '外出活动',
+                    name: '社区互动',
                     type: 'line',
                     stack: '总量',
                     label: {
@@ -351,16 +475,17 @@
         /**
          * 饼图
          */
-        var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'walden');
+        var echartsPies = echarts.init(document.getElementById('echarts-pies'), 'infographic');
         var optionPies = {
             title: {
-                text: '老人年龄分布',
+                text: '长者年龄结构',
                 left: 'center'
             },
             tooltip: {
                 trigger: 'item',
                 formatter: '{a} <br/>{b} : {c} ({d}%)'
             },
+            color: ['#8BC34A', '#4CAF50', '#009688', '#2E7D32', '#1B5E20'],
             legend: {
                 top: 30,
                 orient: 'horizontal',
@@ -395,10 +520,10 @@
         /**
          * 年龄分布柱状图
          */
-        var echartsAge = echarts.init(document.getElementById('echarts-age'), 'walden');
+        var echartsAge = echarts.init(document.getElementById('echarts-age'), 'infographic');
         var optionAge = {
             title: {
-                text: '男女比例分布',
+                text: '长者性别比例',
                 left: 'center'
             },
             tooltip: {
@@ -407,6 +532,7 @@
                     type: 'shadow'
                 }
             },
+            color: ['#4CAF50', '#8BC34A'],
             legend: {
                 top: 30,
                 data: ['男性', '女性']
@@ -451,23 +577,24 @@
         /**
          * 健康状况雷达图
          */
-        var echartsHealth = echarts.init(document.getElementById('echarts-health'), 'walden');
+        var echartsHealth = echarts.init(document.getElementById('echarts-health'), 'infographic');
         var optionHealth = {
             title: {
-                text: '健康状况评估',
+                text: '长者健康指数',
                 left: 'center'
             },
             tooltip: {
                 trigger: 'item'
             },
+            color: ['#4CAF50'],
             radar: {
                 indicator: [
-                    { name: '血压', max: 100 },
+                    { name: '心血管', max: 100 },
                     { name: '血糖', max: 100 },
-                    { name: '心率', max: 100 },
-                    { name: '体重', max: 100 },
-                    { name: '睡眠', max: 100 },
-                    { name: '饮食', max: 100 }
+                    { name: '认知能力', max: 100 },
+                    { name: '体质指数', max: 100 },
+                    { name: '睡眠质量', max: 100 },
+                    { name: '营养状况', max: 100 }
                 ]
             },
             series: [{
@@ -478,22 +605,95 @@
                         value: [85, 78, 82, 90, 75, 88],
                         name: '平均水平',
                         areaStyle: {
-                            color: 'rgba(30, 159, 255, 0.6)'
+                            color: 'rgba(76, 175, 80, 0.6)'
                         }
                     }
                 ]
             }]
         };
         echartsHealth.setOption(optionHealth);
+        
+        /**
+         * 满意度调查图表
+         */
+        var satisfactionChart = echarts.init(document.getElementById('satisfaction-chart'), 'infographic');
+        var satisfactionOption = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            color: ['#4CAF50'],
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'value',
+                max: 100,
+                axisLabel: {
+                    formatter: '{value}%'
+                }
+            },
+            yAxis: {
+                type: 'category',
+                data: ['环境舒适度', '餐饮服务', '医疗护理', '活动安排', '工作人员态度']
+            },
+            series: [
+                {
+                    name: '满意度',
+                    type: 'bar',
+                    label: {
+                        show: true,
+                        position: 'right',
+                        formatter: '{c}%'
+                    },
+                    data: [92, 88, 95, 86, 98]
+                }
+            ]
+        };
+        satisfactionChart.setOption(satisfactionOption);
 
-        // echarts 窗口缩放自适应
-        window.onresize = function () {
-            echartsRecords.resize();
-            echartsPies.resize();
-            echartsAge.resize();
-            echartsHealth.resize();
-        }
+        // 添加页面加载完成后的事件处理
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置进度条动画的初始数据
+            var progressData = [
+                {selector: '.eco-progress-bar:eq(0)', value: '92%'},
+                {selector: '.eco-progress-bar:eq(1)', value: '85%'},
+                {selector: '.eco-progress-bar:eq(2)', value: '78%'},
+                {selector: '.eco-progress-bar:eq(3)', value: '88%'}
+            ];
+            
+            // 延迟执行进度条动画
+            setTimeout(function() {
+                progressData.forEach(function(item) {
+                    $(item.selector).animate({
+                        width: item.value
+                    }, 1000);
+                });
+            }, 500);
+        });
+        
+        // 确保所有图表在页面完全加载后重新渲染一次
+        $(window).on('load', function() {
+            if (window.echartsRecords) echartsRecords.resize();
+            if (window.echartsPies) echartsPies.resize();
+            if (window.echartsAge) echartsAge.resize();
+            if (window.echartsHealth) echartsHealth.resize();
+            if (window.satisfactionChart) satisfactionChart.resize();
+        });
 
+        // 窗口大小变化时，重新调整图表尺寸
+        $(window).on('resize', function() {
+            if (window.echartsRecords) echartsRecords.resize();
+            if (window.echartsPies) echartsPies.resize();
+            if (window.echartsAge) echartsAge.resize();
+            if (window.echartsHealth) echartsHealth.resize();
+            if (window.satisfactionChart) satisfactionChart.resize();
+        });
     });
 </script>
 </body>
