@@ -3,6 +3,8 @@
 ## 📋 项目介绍 (Project Introduction)
 
 本项目是一个基于Spring Boot的养老院信息管理系统，提供全面的养老院日常运营信息管理功能。通过本系统可以方便地管理老人、护工、宿舍分配、健康记录、药物管理、访客管理等信息。
+![image](https://github.com/user-attachments/assets/3e027a2e-5fe9-4e8d-bb8c-636070759e43)
+
 
 ## 🛠 项目技术栈 (Technology Stack)
 
